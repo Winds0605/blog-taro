@@ -33,3 +33,22 @@ export const formatDate = (time, fmt) => {
             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 }
+
+
+export const deepClone = (target, map = new WeakMap()) => {
+    if (typeof target === 'object') {
+        // 判断是否为数组
+        let cloneTarget = Array.isArray(target) ? [] : {};
+        // 防止循环引用导致栈溢出 使用map存储已经拷贝过的对象引用
+        if (map.get(target)) {
+            return map.get(target);
+        }
+        map.set(target, cloneTarget);
+        for (const key in target) {
+            cloneTarget[key] = deepClone(target[key], map);
+        }
+        return cloneTarget;
+    } else {
+        return target;
+    }
+};

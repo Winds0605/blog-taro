@@ -1,27 +1,12 @@
 import Taro, { useEffect, useState } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { post, get } from '../../util/http'
-import { formatDate } from '../../util/utils'
+import { formatDate, deepClone } from '../../util/utils'
 import { AtSearchBar, AtTabs, AtTabsPane } from 'taro-ui'
 import Card from '../../component/card/index'
-// import CardList from '../../component/card-list/index'
+import Empty from '../../component/empty/index'
 import './index.css'
 
-// class CardList extends Taro.Component {
-
-//     constructor(props) {
-//         super(props)
-//         console.log(props)
-//     }
-
-//     render () {
-//         return (
-//             <View>
-//                 2131
-//             </View>
-//         )
-//     }
-// }
 
 
 export default function Article () {
@@ -29,11 +14,12 @@ export default function Article () {
     const [article, setArticle] = useState([])
     const [displayArticle, setDisplayArticle] = useState([])
     const [catelog, setCatelog] = useState({})
-    const [tab, setTab] = useState('全部')
+    const [tempCatelog, setTempCatelog] = useState({})
+    const [tab, setTab] = useState(0)
     const [tag, setTag] = useState([])
-    const [test, setTest] = useState([])
     const [search, setSearch] = useState('')
 
+    // 搜索框变化事件
     let handleChange = (value) => {
         setSearch(value)
         // 在小程序中，如果想改变 value 的值，需要 `return value` 从而改变输入框的当前值
@@ -41,26 +27,36 @@ export default function Article () {
     }
 
     let handleSearch = () => {
-        setDisplayArticle(
-            article.filter(value => {
+
+        if (tab !== 0) {
+            // 其他标签数据搜索处理
+            let name = tag[tab].title
+            let searchArr = catelog[name].filter(value => {
                 return value.title.indexOf(search) !== -1
             })
-        )
+            let cloneCatelog = deepClone(catelog)
+            cloneCatelog[name] = searchArr
+            setCatelog(cloneCatelog)
+        } else {
+            // 全部标签数据处理
+            setDisplayArticle(article.filter(value => {
+                return value.title.indexOf(search) !== -1
+            }))
+        }
+
     }
 
+    // 清空搜索
     let handleClear = () => {
-        setDisplayArticle(
-            article
-        )
+        setDisplayArticle(article)
+        setCatelog(tempCatelog)
         setSearch('')
     }
 
+    // tab切换点击事件
     let handleClick = (value) => {
-        console.log(value)
         setTab(value)
     }
-
-
 
     useEffect(() => {
         let arr = {}
@@ -76,7 +72,6 @@ export default function Article () {
                 })
                 arr[value] = []
             })
-            setTest(["全部", ...res.data.data[0].tags])
             setTag(result)
             return get('/articles/findAll')
         }).then(res => {
@@ -87,6 +82,7 @@ export default function Article () {
                     }
                 })
             })
+            setTempCatelog(arr)
             setCatelog(arr)
         })
     }, [])
@@ -103,16 +99,17 @@ export default function Article () {
                 <AtTabs
                     current={tab}
                     scroll
+                    animated={false}
                     tabList={tag}
                     onClick={handleClick} >
                     {
 
-                        test.map((value, index) =>
-                            < AtTabsPane current={value} index={index} key={value}>
+                        tag.map((value, index) =>
+                            < AtTabsPane current={index} index={index} key={value.title}>
                                 <View>
                                     {/* {value} */}
                                     {
-                                        value === "全部" ? (
+                                        value.title === "全部" ? (
                                             displayArticle.map(item => {
                                                 return (
                                                     <Card
@@ -127,7 +124,7 @@ export default function Article () {
                                                 )
                                             })
                                         ) : (
-                                                catelog[value] ? (catelog[value].map(item => {
+                                                catelog[value.title] && catelog[value.title].length ? (catelog[value.title].map(item => {
                                                     return (
                                                         <Card
                                                             key={item.modifyOn}
@@ -139,7 +136,7 @@ export default function Article () {
                                                             tag={item.tag}
                                                             desc={item.desc} />
                                                     )
-                                                })) : <View>无数据{value}</View>
+                                                })) : <Empty />
                                             )
                                     }
                                 </View>
