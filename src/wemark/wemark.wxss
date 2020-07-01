@@ -71,6 +71,7 @@
 	border:1rpx solid #f0f0f0;
 	white-space: pre;
 	overflow: auto;
+	background-color: #f3f3f3a1;
 }
 .wemark_block_table{
 	width: 100%;

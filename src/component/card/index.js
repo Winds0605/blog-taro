@@ -4,7 +4,7 @@ import { AtTag, AtButton } from 'taro-ui'
 import './index.css'
 
 
-export default ({ title, date, views, tag, desc, banner, articleId }) => {
+export default ({ title, date, views, tag, desc, banner, articleId, handleClick }) => {
 
     const [id, setId] = useState(articleId)
 
@@ -13,8 +13,10 @@ export default ({ title, date, views, tag, desc, banner, articleId }) => {
     }
 
     return (
-        <View className="article">
-            <Image src={banner} className="banner"></Image>
+        <View className="article" onClick={handleClick}>
+            <View className="banner">
+                <Image src={banner} className="img"></Image>
+            </View>
             <View className="article-container">
                 <Text className="title">{title}</Text>
                 <View className="other">
@@ -25,7 +27,6 @@ export default ({ title, date, views, tag, desc, banner, articleId }) => {
                 <Text className="desc">
                     {desc}
                 </Text>
-                <Button className="delete" onClick={handleDeleteArticle}>删除</Button>
             </View>
         </View>
     )

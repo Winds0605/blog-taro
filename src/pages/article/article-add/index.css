@@ -1,0 +1,52 @@
+.picker {
+  padding: 24px 0;
+  overflow: hidden;
+  font-size: 32px;
+  border-bottom: 1px solid #EEF4F8;
+}
+
+.picker .tip {
+  width: 172px;
+  margin-right: 16px;
+  display: block;
+  float: left;
+}
+
+
+.picker .select {
+  display: block;
+  float: left;
+  line-height: 1.5;
+  color: #D0D0D0;
+  font-weight: 400;
+  margin-right: 32px;
+}
+
+
+.article_form {
+  padding: 0 20px;
+}
+
+.article_form .title {
+  margin-left: 0;
+}
+
+.content_tip,
+.image_tip {
+  display: block;
+  position: relative;
+  height: 40px;
+  padding-left: 25px;
+  margin: 20px 0;
+  line-height: 40px;
+}
+
+.content_tip::after,
+.image_tip::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 8px;
+  height: 100%;
+  background-color: #6B98E6;
+}

@@ -4,7 +4,7 @@ import { baseUrl, HTTP_STATUS } from './config'
 
 function baseOptions (params, method = 'GET') {
     let { url, data } = params
-    let contentType = 'application/x-www-form-urlencoded'
+    let contentType = 'application/json'
     contentType = params.contentType || contentType
     const option = {
         isShowLoading: false,

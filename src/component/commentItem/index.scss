@@ -1,0 +1,46 @@
+.comment-item {
+  position: relative;
+  min-height: 100px;
+  padding: 40px;
+  overflow: hidden;
+
+  .avatar {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    display: block;
+    float: left;
+  }
+
+  .other {
+    margin-left: 100px;
+
+    .info {
+      color: #898989;
+      font-size: 22px;
+
+      .name {
+        margin-right: 30px;
+      }
+    }
+
+    .content {
+      padding: 10px 0;
+      font-size: medium;
+      color: rgb(50, 50, 50);
+    }
+  }
+
+  .children-item {
+    width: 85%;
+    float: right;
+    margin-top: 16px;
+    padding-left: 20px;
+
+    border-left: 5px solid #e7e7e7;
+
+    .other {
+      margin-left: 0px;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+.load {
+  margin-bottom: 80px;
+}
+
+.input {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
+  border-top: 1px solid #e7e7e7;
+  background-color: white;
+  z-index: 10;
+
+  .item {
+    display: block;
+    float: left;
+    width: 76%;
+    height: 60px;
+    padding-left: 20px;
+    background-color: #ededed;
+    border-radius: 30px;
+  }
+
+  .placeholder {
+    font-size: 24px;
+    margin-left: 30px;
+  }
+
+  .btn {
+    margin-left: 20px;
+    background-color: #7AA6F2;
+    color: white;
+    border-color: #7AA6F2;
+  }
+
+}

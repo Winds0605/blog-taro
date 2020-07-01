@@ -5,3 +5,7 @@
 .tab {
   margin-top: 85px;
 }
+
+.tabs-pane {
+  position: relative;
+}

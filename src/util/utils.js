@@ -52,3 +52,17 @@ export const deepClone = (target, map = new WeakMap()) => {
         return target;
     }
 };
+
+
+export const debounce = (fn, wait = 50, immediate) => {
+    let timer;
+    return function () {
+        if (immediate) {
+            fn.apply(this, arguments)
+        }
+        if (timer) clearTimeout(timer)
+        timer = setTimeout(() => {
+            fn.apply(this, arguments)
+        }, wait)
+    }
+}

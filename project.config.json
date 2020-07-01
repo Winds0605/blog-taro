@@ -9,7 +9,7 @@
 		"enhance": false,
 		"postcss": false,
 		"preloadBackgroundData": false,
-		"minified": false,
+		"minified": true,
 		"newFeature": true,
 		"coverView": true,
 		"autoAudits": false,
@@ -22,7 +22,10 @@
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
-		}
+		},
+		"useIsolateContext": true,
+		"useCompilerModule": false,
+		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
 	"simulatorType": "wechat",
@@ -51,9 +54,31 @@
 			"current": -1,
 			"list": [
 				{
+					"id": 0,
+					"name": "article",
+					"pathName": "pages/article-list/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "详情",
+					"pathName": "pages/article-detail/index",
+					"query": "id=2643881743",
+					"scene": null
+				},
+				{
 					"id": -1,
-					"name": "pages/article/index",
-					"pathName": "pages/article/index",
+					"name": "首页",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "留言",
+					"pathName": "pages/message/index",
+					"query": "",
 					"scene": null
 				}
 			]
