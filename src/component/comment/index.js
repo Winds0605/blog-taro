@@ -6,21 +6,22 @@ import './index.scss'
 
 
 export default (props) => {
+    const { data, commentInsert } = props
     const [isOpened, setIsOpened] = useState(false)
     const [input, setInput] = useState('')
     const [focus, setFocus] = useState(false)
     const [currentActiveMessageId, setCurrentActiveMessageId] = useState('')
-    const [replyAuthor, setReplyAuthor] = useState('')
+    const [reply, setReply] = useState('')
 
-    const handleClick = (item) => {
-        setIsOpened(true)
-        setCurrentActiveMessageId(item.messageId)
-    }
-
-    const handleChildrenClick = (id, item) => {
+    const handleClick = (id) => {
         setIsOpened(true)
         setCurrentActiveMessageId(id)
-        setReplyAuthor(item.author)
+    }
+
+    const handleChildrenClick = (id, reply) => {
+        setReply(reply)
+        setIsOpened(true)
+        setCurrentActiveMessageId(id)
     }
 
     const onInput = (e) => {
@@ -29,24 +30,36 @@ export default (props) => {
 
     const handleReply = () => {
         setFocus(true)
-        if (replyAuthor) {
-            setInput(`@${replyAuthor}:`)
-        }
         setIsOpened(false)
     }
 
     const handleComment = () => {
-        console.log(input)
+        if (input.length > 0) {
+            commentInsert(input, currentActiveMessageId, reply)
+            setInput('')
+            setReply('')
+            setCurrentActiveMessageId('')
+        } else {
+            Taro.atMessage({
+                message: '你还没输入呢',
+                type: 'warning'
+            })
+        }
     }
 
 
-    const { data } = props
     return (
         <View className="comment">
+            <AtMessage />
             <View className="container">
                 {
                     data && data.length > 0 ? data.map(item => {
-                        return <CommentItem {...item} key={item.modifyOn} handleClick={handleClick.bind(this, item)} handleChildrenClick={handleChildrenClick} />
+                        return <CommentItem
+                            {...item}
+                            key={item.modifyOn}
+                            handleClick={handleClick.bind(this, item.messageId, false)}
+                            handleChildrenClick={handleChildrenClick}
+                        />
                     }) : ''
                 }
             </View>

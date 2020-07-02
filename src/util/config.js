@@ -1,4 +1,6 @@
-export const baseUrl = "http://47.102.110.34:3030"
+// export const baseUrl = "http://192.168.0.110:3030" // 家
+export const baseUrl = "http://localhost:3030" // 本地
+// export const baseUrl = "http://47.102.110.34:3030" //服务器
 
 export const HTTP_STATUS = {
     SUCCESS: 200,

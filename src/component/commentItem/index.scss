@@ -20,6 +20,7 @@
       font-size: 22px;
 
       .name {
+        font-size: 26px;
         margin-right: 30px;
       }
     }
@@ -31,16 +32,43 @@
     }
   }
 
-  .children-item {
-    width: 85%;
-    float: right;
-    margin-top: 16px;
-    padding-left: 20px;
+  .children-container {
+    // background-color: #f3f3f3;
+    margin-left: 60px;
+    overflow: hidden;
+    border-radius: 10px;
+    padding: 10px 30px;
 
-    border-left: 5px solid #e7e7e7;
+    .children-item {
+      border-bottom: 1px solid rgb(240, 240, 240);
+      padding: 20px 0;
+      margin: 20px 0;
 
-    .other {
-      margin-left: 0px;
+      .avatar {
+        height: 60px;
+        width: 60px;
+        margin-right: 30px;
+      }
+
+      .other {
+        margin-left: 0px;
+        font-size: 22px;
+
+        .content {
+          font-size: 22px;
+        }
+
+        .reply {
+          display: inline-block;
+          margin-right: 10px;
+          color: #3A9FFC;
+        }
+      }
     }
+
+    .children-item:nth-child(1) {
+      border-top: 1px solid rgb(240, 240, 240);
+    }
+
   }
 }

@@ -1,9 +1,9 @@
-import Taro, { Component, useState, useEffect } from "@tarojs/taro"
-import { View, Button, Image } from "@tarojs/components"
+import Taro, { useState, useEffect } from "@tarojs/taro"
+import { View, Button } from "@tarojs/components"
+import './index.scss'
 
-
-export default () => {
-    const [btnText, setBtnText] = useState('微信授权登录')
+export default ({ getUserInfoFromStorage }) => {
+    const [btnText, setBtnText] = useState('请您授权登录喔')
     const [oauthBtnStatus, setOauthBtnStatus] = useState(true)
 
     // 获取用户授权结果
@@ -11,7 +11,7 @@ export default () => {
         Taro.getSetting().then(res => {
             if (Object.keys(res.authSetting).length === 0 || !res.authSetting['scope.userInfo']) {
                 // 用户信息无授权
-                console.log(res.authSetting)
+                // console.log(res.authSetting)
                 console.log('用户无授权信息')
             } else {
                 // 用户允许授权获取用户信息
@@ -44,11 +44,12 @@ export default () => {
                 key: 'userInfo',
                 data: res.detail.userInfo
             })
+            getUserInfoFromStorage()
         } else {
             // 用户取消授权，进行提示，促进重新授权
             Taro.showModal({
                 title: '温馨提示',
-                content: '未授权无法进行留言',
+                content: '未授权无法使用留言板功能',
                 showCancel: false // 不展示取消按钮
             })
                 .then(ModalRes => {
