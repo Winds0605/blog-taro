@@ -17,7 +17,7 @@ export default function Login () {
     const INIT_PAGE = 1
     const INIT_PAGE_SIZE = 10
 
-    // 获取评论列表
+    // 初次获取评论列表
     const fetchCommentList = () => {
         post('/messages/findAll', {
             page: INIT_PAGE,
@@ -28,6 +28,7 @@ export default function Login () {
         })
     }
 
+    // 下拉获取更多数据
     const fetchMoreCommentList = () => {
         post('/messages/findAll', {
             page: page + 1,
@@ -55,24 +56,22 @@ export default function Login () {
             messageId: isSubComment
         }
         let res = null
-        if (isSubComment) {
-            res = await post('/messages/addSubMessage', params)
-        } else {
-            res = await post('/messages/add', params)
-        }
+
+        if (isSubComment) res = await post('/messages/addSubMessage', params)
+        else res = await post('/messages/add', params)
+
         if (res.data.code === 200) {
             setPage(1)
             setStatus('loading')
             actionCallback(null, '留言成功')
         } else {
             actionCallback('error', '留言失败')
+            return
         }
 
-        if (isSubComment) {
-            addChildrenComment(params)
-        } else {
-            addComment(params)
-        }
+        if (isSubComment) addChildrenComment(params)
+        else addComment(params)
+
     }
 
     const addComment = (params) => {
@@ -91,9 +90,7 @@ export default function Login () {
         setComment(newComment)
     }
 
-    const actionCallback = (type, message) => {
-        Taro.atMessage({ message, type })
-    }
+    const actionCallback = (type, message) => Taro.atMessage({ message, type })
 
     useReachBottom(() => {
         if (comment.length === commentLength) {
